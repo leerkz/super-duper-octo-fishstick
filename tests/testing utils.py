@@ -26,6 +26,5 @@ test = ['Maestro 1596837868705199',
         'Visa Gold 5999414228426353',
         'Счет 73654108430135874305']
 
-
 for i in test:
     print(card_account(i))

@@ -33,4 +33,3 @@ def date(data_date: str) -> str:
 
 print(date('2018-07-11T02:26:18.671407'))
 print(card_account('Visa Platinum 7000 7922 8960 6361'))
-
