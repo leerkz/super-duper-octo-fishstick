@@ -9,4 +9,4 @@ def account_masks(account_number: str) -> str:
     """
     Функция принимает на вход номер счета и возвращает его маску.
     """
-    return "**" + str(account_number)[-4:]
+    return "**" + account_number[-4:]
