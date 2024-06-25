@@ -3,6 +3,7 @@ import logging
 import os
 from typing import Any
 
+import pandas as pd
 import requests
 from dotenv import load_dotenv
 
@@ -59,13 +60,22 @@ def get_transactions(transaction: dict) -> float:
         return result2
 
 
-print(
-    get_transactions(
-        {
-            "id": 441945886,
-            "state": "EXECUTED",
-            "date": "2019-08-26T10:50:58.294041",
-            "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
-        }
-    )
-)
+def reading_csv(file_path: Any) -> list[Any]:
+    """
+    считывание финансовых операций с CSV-файлов.
+    """
+    csv_reviews = pd.read_csv(file_path, sep=";")
+    convert = csv_reviews.to_dict(orient="records")
+    return convert
+
+
+def reading_xlsx(file_path: Any) -> list[Any]:
+    """
+    считывание финансовых операций с XLSX-файлов.
+    """
+    xlsx_reviews = pd.read_excel(file_path)
+    convert = xlsx_reviews.to_dict(orient="records")
+    return convert
+
+
+print(reading_csv("C:\\Users\\Student Free\\PycharmProjects\\pythonProject3\\data\\transactions.csv"))

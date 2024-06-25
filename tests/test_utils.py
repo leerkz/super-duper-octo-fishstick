@@ -2,7 +2,9 @@ import json
 import os
 from unittest.mock import Mock, patch
 
-from src.utils import data_finance
+from pandas import DataFrame
+
+from src.utils import data_finance, reading_csv, reading_xlsx
 
 
 @patch("builtins.open")
@@ -42,3 +44,15 @@ def test_data_finance_with_mistake() -> None:
 def test_get_transactions() -> None:
     mock_random = Mock(return_value=31957.58)
     assert mock_random() == 31957.58
+
+
+@patch("pandas.read_excel")
+def test_reading_xlsx(mock_read_excel: Mock) -> None:
+    mock_read_excel.return_value = DataFrame({"key": ["value"]})
+    assert reading_xlsx("test.xlsx") == [{"key": "value"}]
+
+
+@patch("pandas.read_csv")
+def test_reading_csv(mock_read_excel: Mock) -> None:
+    mock_read_excel.return_value = DataFrame({"key": ["value"]})
+    assert reading_csv("test.csv") == [{"key": "value"}]
