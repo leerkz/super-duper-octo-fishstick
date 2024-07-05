@@ -58,7 +58,7 @@ def main() -> None:
             data = sorted_dict_date(data)
         else:
             data = sorted_dict_date(data, True)
-    print("Выводить только рублевые тразакции? Да/Нет")
+    print("Выводить только рублевые тразакции?ll Да/Нет")
     input5 = input().lower()
     if input5 == "да":
         new_list = []
