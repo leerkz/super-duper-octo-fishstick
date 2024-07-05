@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+import re
+from collections import Counter
 from typing import Any
 
 import pandas as pd
@@ -78,4 +80,29 @@ def reading_xlsx(file_path: Any) -> list[Any]:
     return convert
 
 
-print(reading_csv("C:\\Users\\Student Free\\PycharmProjects\\pythonProject3\\data\\transactions.csv"))
+def sorted_by_line(bank_operate: list[dict], search_line: str) -> list[dict]:
+    """
+    Принимает данные о банковских операциях и строку поиска и возвращет список словарей с описаниум данной строки.
+    """
+    pattern = re.compile(search_line, re.I)
+    result_answer = []
+    for element in bank_operate:
+        if pattern.search(element["description"]):
+            result_answer.append(element)
+    return result_answer
+
+
+def get_amount_by_category(bank_operate: list[dict], descriptions: dict) -> dict:
+    """
+    Возвращает словарь, в котором ключи — это названия категорий, а значения — это количество операций категории.
+    """
+    pattern1 = re.compile("Перевод организации", re.I)
+    pattern2 = re.compile("Перевод с карты на карту", re.I)
+    pattern3 = re.compile("Перевод со счета на счет", re.I)
+    pattern4 = re.compile("Открытие вклада", re.I)
+    counter = Counter(operation["description"] for operation in bank_operate)
+    descriptions["Перевод организации"] = counter[pattern1.pattern]
+    descriptions["Перевод с карты на карту"] = counter[pattern2.pattern]
+    descriptions["Перевод со счета на счет"] = counter[pattern3.pattern]
+    descriptions["Открытие вклада"] = counter[pattern4.pattern]
+    return descriptions
